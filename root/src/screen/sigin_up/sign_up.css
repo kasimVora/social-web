@@ -1,0 +1,80 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #fafafa;
+}
+
+.register-box {
+  width: 350px;
+  padding: 20px;
+  border: 1px solid #dbdbdb;
+  background-color: white;
+  text-align: center;
+}
+
+.register-logo {
+  font-family: 'Billabong', cursive;
+  font-size: 40px;
+  margin: 20px 0;
+}
+
+.register-input {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  background-color: #fafafa;
+}
+
+.register-button {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  background-color: #0095f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.register-divider {
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  color: #8e8e8e;
+}
+
+.register-divider::before,
+.register-divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #dbdbdb;
+  margin: 0 10px;
+}
+
+.register-facebook-button {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  background-color: transparent;
+  color: #385185;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.register-login-link {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #262626;
+}
+
+.register-login-link a {
+  color: #0095f6;
+  text-decoration: none;
+  font-weight: bold;
+}
