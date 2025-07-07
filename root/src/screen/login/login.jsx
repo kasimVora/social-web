@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import './Login.css'; // Reuse or create this CSS file
 import httpService from '../../services/api_service';
 import { API_ENDPOINTS } from '../../constants/api_constants';
+import { showErrorToast, showSuccessToast } from '../../utils/toast';
+import { storageService } from '../../services/storage_services';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-
+  const navigate = useNavigate(); 
  const [loading,setLoading] = useState(false);
  const [userData,setUserData] = useState({
   email:"",
@@ -34,7 +37,15 @@ const Login = () => {
     setLoading(true);
     const res = await httpService.post(API_ENDPOINTS.AUTH.LOGIN,userData)
      setLoading(false);
-    console.log(res)
+     const response = res.data;
+     if(response.status){
+      showSuccessToast(response.message)
+      storageService.set('token', response.jwt);
+      storageService.set('user', JSON.stringify(response.data));
+      navigate("/profile");
+     }else{
+      showErrorToast(response.message)
+     }
 
    }catch(err){
     console.log("loginERROR == " ,err)

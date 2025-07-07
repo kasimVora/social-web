@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './sign_up.css'; // Create this CSS file for styling
 import httpService from '../../services/api_service';
 import { API_ENDPOINTS } from '../../constants/api_constants';
+import { showErrorToast, showSuccessToast } from '../../utils/toast';
 
 const Register = () => {
 
@@ -18,13 +19,6 @@ const Register = () => {
       ...prev,
       [name]: value
     }));
-    // Clear error when user types
-    // if (errors[name]) {
-    //   setErrors(prev => ({
-    //     ...prev,
-    //     [name]: ''
-    //   }));
-    // }
   };
 
 
@@ -34,7 +28,15 @@ const Register = () => {
     setLoading(true);
     const res = await httpService.post(API_ENDPOINTS.AUTH.REGISTER,userData)
      setLoading(false);
-    console.log(res)
+     const response = res.data;
+     if(response.status){
+      showSuccessToast(response.message)
+      storageService.set('token', response.jwt);
+      storageService.set('user', JSON.stringify(response.data));
+      navigate("/profile");
+     }else{
+      showErrorToast(response.message)
+     }
 
    }catch(err){
     console.log("loginERROR == " ,err)

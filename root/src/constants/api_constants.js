@@ -1,11 +1,12 @@
 // API Base URL - can be set based on environment
-const BASE_URL = 'http://192.168.41.107:8000/';
+const BASE_URL = 'http://192.168.5.172:8000/';
 
 // API Endpoints
 const API_ENDPOINTS = {
   AUTH: {
     LOGIN: '/loginUser',
     REGISTER: '/createUser',
+    GET_PROFILE: '/api/getSingleUser',
     LOGOUT: '/auth/logout',
     REFRESH_TOKEN: '/auth/refresh',
     FORGOT_PASSWORD: '/auth/forgot-password',

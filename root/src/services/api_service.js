@@ -1,6 +1,7 @@
 // axiosService.js
 import axios from 'axios';
 import { BASE_URL } from '../constants/api_constants';
+import { storageService } from './storage_services';
 
 // Create axios instance with default config
 const axiosInstance = axios.create({
@@ -22,10 +23,12 @@ axiosInstance.interceptors.request.use(
     console.log('Request config:', config);
     
     // You can modify request config here (e.g., add auth token)
-    // const token = localStorage.getItem('authToken');
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`;
-    // }
+    const token = storageService.get('token');
+    if (token) {
+      config.headers.Authorization = `${token}`;
+    }
+
+    console.log("config",config)
     
     return config;
   },
@@ -88,7 +91,17 @@ axiosInstance.interceptors.response.use(
 
 // HTTP Methods
 const httpService = {
-  get: (url, config = {}) => axiosInstance.get(url, config),
+  get: (url, params = {}, config = {}) => {
+    // Combine any existing params in config with new params
+    const requestConfig = {
+      ...config,
+      params: {
+        ...(config.params || {}), // Existing params from config
+        ...params                // New params passed to get()
+      }
+    };
+    return axiosInstance.get(url, requestConfig);
+  },
   post: (url, data, config = {}) => axiosInstance.post(url, data, config),
   put: (url, data, config = {}) => axiosInstance.put(url, data, config),
   patch: (url, data, config = {}) => axiosInstance.patch(url, data, config),
